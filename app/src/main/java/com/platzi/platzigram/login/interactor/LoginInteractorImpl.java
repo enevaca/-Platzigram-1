@@ -1,5 +1,8 @@
 package com.platzi.platzigram.login.interactor;
 
+import android.app.Activity;
+
+import com.google.firebase.auth.FirebaseAuth;
 import com.platzi.platzigram.login.presenter.LoginPresenter;
 import com.platzi.platzigram.login.repository.LoginRepository;
 import com.platzi.platzigram.login.repository.LoginRepositoryImpl;
@@ -8,7 +11,7 @@ import com.platzi.platzigram.login.repository.LoginRepositoryImpl;
  * Created by enevaca on 23/12/2017.
  */
 
-public class LoginInteractorImpl implements LoginInteractor {
+public class LoginInteractorImpl  implements LoginInteractor{
 
     private LoginPresenter presenter;
     private LoginRepository repository;
@@ -19,7 +22,7 @@ public class LoginInteractorImpl implements LoginInteractor {
     }
 
     @Override
-    public void signIn(String username, String password) {
-        repository.signIn(username, password);
+    public void signIn(String username, String password, Activity activity, FirebaseAuth firebaseAuth) {
+        repository.signIn(username, password, activity, firebaseAuth);
     }
 }
