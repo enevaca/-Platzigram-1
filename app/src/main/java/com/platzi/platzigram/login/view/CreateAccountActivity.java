@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.crash.FirebaseCrash;
 import com.platzi.platzigram.R;
 
 public class CreateAccountActivity extends AppCompatActivity {
@@ -43,8 +44,10 @@ public class CreateAccountActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 if (firebaseUser != null) { //el usuario está logueado
+                    FirebaseCrash.logcat(Log.WARN, TAG, "Usuario Logueado " + firebaseUser.getEmail());
                     Log.w(TAG, "Usuario logueado " + firebaseUser.getEmail());
                 } else {
+                    FirebaseCrash.logcat(Log.WARN, TAG, "Usuario No Logueado");
                     Log.w(TAG, "Usuario No logueado ");
                 }
             }

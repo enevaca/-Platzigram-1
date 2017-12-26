@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.platzi.platzigram.R;
 import com.platzi.platzigram.adapter.PictureAdapterRecyclerView;
 import com.platzi.platzigram.model.Picture;
@@ -49,6 +50,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        FirebaseCrash.report(new Exception("Reporte desde HomeFragment"));
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         showToolbar(getResources().getString(R.string.tab_home), false, view);
@@ -83,6 +85,7 @@ public class HomeFragment extends Fragment {
                 photoFile = createImageFile();
             } catch (Exception e) {
                 e.printStackTrace();
+                FirebaseCrash.report(e);
             }
 
             if (photoFile != null) {

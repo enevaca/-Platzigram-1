@@ -116,6 +116,7 @@
     <orderEntry type="jdk" jdkName="Android API 26 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="com.android.support:animated-vector-drawable-27.0.1" level="project" />
+    <orderEntry type="library" name="com.google.firebase:firebase-crash-11.8.0" level="project" />
     <orderEntry type="library" name="com.facebook.android:facebook-places-4.29.0" level="project" />
     <orderEntry type="library" name="com.android.support:recyclerview-v7-26.1.0" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-iid-11.8.0" level="project" />
@@ -158,6 +159,7 @@
     <orderEntry type="library" name="com.google.firebase:firebase-analytics-impl-11.8.0" level="project" />
     <orderEntry type="library" name="com.facebook.android:facebook-applinks-4.29.0" level="project" />
     <orderEntry type="library" name="com.android.support:appcompat-v7-27.0.1" level="project" />
+    <orderEntry type="library" name="com.google.firebase:firebase-storage-11.8.0" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-iid-license-11.8.0" level="project" />
     <orderEntry type="library" scope="TEST" name="junit:junit:4.12@jar" level="project" />
     <orderEntry type="library" name="com.facebook.android:facebook-common-4.29.0" level="project" />
@@ -165,8 +167,12 @@
     <orderEntry type="library" name="com.android.support:support-annotations:27.0.1@jar" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-analytics-11.8.0" level="project" />
     <orderEntry type="library" name="com.zoonref:simple-view-behavior-1.0" level="project" />
+    <orderEntry type="library" name="com.google.firebase:firebase-storage-license-11.8.0" level="project" />
     <orderEntry type="library" name="com.facebook.android:facebook-core-4.29.0" level="project" />
     <orderEntry type="library" name="com.parse.bolts:bolts-android:1.4.0@jar" level="project" />
+    <orderEntry type="library" name="com.google.firebase:firebase-storage-common-11.8.0" level="project" />
+    <orderEntry type="library" name="com.google.firebase:firebase-storage-common-license-11.8.0" level="project" />
+    <orderEntry type="library" name="com.google.firebase:firebase-crash-license-11.8.0" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-analytics-license-11.8.0" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-analytics-impl-license-11.8.0" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-tasks-license-11.8.0" level="project" />

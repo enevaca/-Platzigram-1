@@ -27,6 +27,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.crash.FirebaseCrash;
 import com.platzi.platzigram.R;
 import com.platzi.platzigram.login.presenter.LoginPresenter;
 import com.platzi.platzigram.login.presenter.LoginPresenterImpl;
@@ -105,7 +106,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
             public void onError(FacebookException error) {
                 Log.w(TAG, "Facebook Login Error: " + error.toString());
                 error.printStackTrace();
-                //FirebaseCrash.report(error);
+                FirebaseCrash.report(error);
             }
         });
     }
@@ -119,17 +120,17 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if (task.isSuccessful()){
-                    /*FirebaseUser user = task.getResult().getUser();
+                    FirebaseUser user = task.getResult().getUser();
                     SharedPreferences preferences = getSharedPreferences("USER", Context.MODE_PRIVATE);
 
                     SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("email", user.getEmail());
-                    editor.commit();*/
+                            editor.putString("email", user.getEmail());
+                            editor.commit();
                     goHome();
-                    //FirebaseCrash.logcat(Log.WARN, TAG, "Login Facebook Exitoso");
+                    FirebaseCrash.logcat(Log.WARN, TAG, "Login Facebook Exitoso");
                     Toast.makeText(LoginActivity.this, "Login Facebook Exitoso", Toast.LENGTH_SHORT).show();
                 }else {
-                    //FirebaseCrash.logcat(Log.WARN, TAG, "Login Facebook NO Exitoso");
+                    FirebaseCrash.logcat(Log.WARN, TAG, "Login Facebook NO Exitoso");
                     Toast.makeText(LoginActivity.this, "Login Facebook NO Exitoso", Toast.LENGTH_SHORT).show();
                 }
             }
