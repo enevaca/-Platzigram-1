@@ -47,7 +47,7 @@ public class LoginRepositoryImpl implements LoginRepository {
 
 
                             FirebaseCrash.logcat(Log.WARN, TAG, "Usuario logeado " + user.getEmail());*/
-                            
+
                             presenter.loginSuccess();
                         }else {
                             //FirebaseCrash.logcat(Log.ERROR, TAG, "Ocurrió un Error");

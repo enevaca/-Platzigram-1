@@ -1,6 +1,8 @@
 package com.platzi.platzigram.login.view;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,18 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.platzi.platzigram.R;
@@ -18,21 +32,28 @@ import com.platzi.platzigram.login.presenter.LoginPresenter;
 import com.platzi.platzigram.login.presenter.LoginPresenterImpl;
 import com.platzi.platzigram.view.ContainerActivity;
 
+import java.util.Arrays;
+
 public class LoginActivity extends AppCompatActivity implements LoginView {
 
     private TextInputEditText username, password;
     private Button login;
+    private LoginButton loginButtonFacebook;
     private ProgressBar progressBarLogin;
     private LoginPresenter presenter;
 
     private static final String TAG = "LoginActivitys";
     private FirebaseAuth firebaseAuth;
     private FirebaseAuth.AuthStateListener authStateListener;
+    private CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
 
         firebaseAuth = FirebaseAuth.getInstance();
         authStateListener = new FirebaseAuth.AuthStateListener() {
@@ -41,20 +62,22 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 if (firebaseUser != null){
                     Log.w(TAG, "Usuario logeado " + firebaseUser.getEmail());
-                    //goHome();
+                    goHome();
                 }else {
                     Log.w(TAG, "Usuario No logeado ");
                 }
             }
         };
 
-        username = (TextInputEditText) findViewById(R.id.username);
-        password = (TextInputEditText) findViewById(R.id.password);
-        login = (Button) findViewById(R.id.login);
+        username    = (TextInputEditText) findViewById(R.id.username);
+        password    = (TextInputEditText) findViewById(R.id.password);
+        login       = (Button) findViewById(R.id.login);
+        loginButtonFacebook = (LoginButton) findViewById(R.id.login_facebook);
         progressBarLogin = (ProgressBar) findViewById(R.id.progressbarLogin);
         hideProgressBar();
 
         presenter = new LoginPresenterImpl(this);
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,6 +85,53 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 //if (username.equals(""))
                 signIn(username.getText().toString(), password.getText().toString());
 
+            }
+        });
+
+        loginButtonFacebook.setReadPermissions(Arrays.asList("email"));
+        loginButtonFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.w(TAG, "Facebook Login Success Token: " + loginResult.getAccessToken().getApplicationId());
+                signInFacebookFirebase(loginResult.getAccessToken());
+            }
+
+            @Override
+            public void onCancel() {
+                Log.w(TAG, "Facebook Login Cancelado ");
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.w(TAG, "Facebook Login Error: " + error.toString());
+                error.printStackTrace();
+                //FirebaseCrash.report(error);
+            }
+        });
+    }
+
+    private void signInFacebookFirebase(AccessToken accessToken) {
+        Log.w(TAG, accessToken.getToken());
+        AuthCredential authCredential = FacebookAuthProvider.getCredential(accessToken.getToken());
+
+        firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+
+                if (task.isSuccessful()){
+                    /*FirebaseUser user = task.getResult().getUser();
+                    SharedPreferences preferences = getSharedPreferences("USER", Context.MODE_PRIVATE);
+
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("email", user.getEmail());
+                    editor.commit();*/
+                    goHome();
+                    //FirebaseCrash.logcat(Log.WARN, TAG, "Login Facebook Exitoso");
+                    Toast.makeText(LoginActivity.this, "Login Facebook Exitoso", Toast.LENGTH_SHORT).show();
+                }else {
+                    //FirebaseCrash.logcat(Log.WARN, TAG, "Login Facebook NO Exitoso");
+                    Toast.makeText(LoginActivity.this, "Login Facebook NO Exitoso", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -125,5 +195,11 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     protected void onStop() {
         super.onStop();
         firebaseAuth.removeAuthStateListener(authStateListener);
+    }
+
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }
