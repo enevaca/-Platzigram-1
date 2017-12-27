@@ -139,6 +139,7 @@
     <orderEntry type="library" name="com.facebook.android:facebook-android-sdk-4.29.0" level="project" />
     <orderEntry type="library" name="com.roughike:bottom-bar-2.0.2" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-basement-11.8.0" level="project" />
+    <orderEntry type="library" name="com.google.firebase:firebase-messaging-license-11.8.0" level="project" />
     <orderEntry type="library" name="android.arch.core:common:1.0.0@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-compat-27.0.1" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-common-11.8.0" level="project" />
@@ -170,6 +171,7 @@
     <orderEntry type="library" name="com.google.firebase:firebase-storage-license-11.8.0" level="project" />
     <orderEntry type="library" name="com.facebook.android:facebook-core-4.29.0" level="project" />
     <orderEntry type="library" name="com.parse.bolts:bolts-android:1.4.0@jar" level="project" />
+    <orderEntry type="library" name="com.google.firebase:firebase-messaging-11.8.0" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-storage-common-11.8.0" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-storage-common-license-11.8.0" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-crash-license-11.8.0" level="project" />
